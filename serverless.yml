@@ -5,6 +5,7 @@ frameworkVersion: '3'
 
 provider:
   name: aws
+  region: us-east-1
   runtime: nodejs18.x
 
 functions:
@@ -12,7 +13,7 @@ functions:
     handler: index.handler
     events:
       - httpApi:
-          path: /
+          path: /clip
           method: get
 
 plugins:

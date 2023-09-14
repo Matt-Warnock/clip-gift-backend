@@ -10,7 +10,7 @@ provider:
 
 functions:
   api:
-    handler: index.handler
+    handler: src/utility/handlers/clip.handler
     events:
       - httpApi:
           path: /clip

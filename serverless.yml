@@ -23,4 +23,4 @@ plugins:
 custom:
   scripts:
     hooks:
-      'deploy:finalize': newman run fixtures/clipgift-endpoint-tests.postman_collection.json --env-var "endpoint=${cf:${sls:service}-${sls:stage}.HttpApiUrl}"
+      'deploy:finalize': newman run fixtures/clipgift-endpoint-tests.postman_collection.json --env-var "endpoint=${cf:${self:service}-${sls:stage}.HttpApiUrl}"

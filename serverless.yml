@@ -28,5 +28,5 @@ custom:
 
   scripts:
     hooks:
-      - cat ./build/stack-env.json
-      - 'deploy:finalize': newman run fixtures/clipgift-endpoint-tests.postman_collection.json -e ./build/stack-env.json
+      'deploy:finalize': newman run fixtures/clipgift-endpoint-tests.postman_collection.json -e ./build/stack-env.json
+      'Stack Outputs:': cat ./build/stack-env.json

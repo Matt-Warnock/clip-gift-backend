@@ -8,7 +8,7 @@ provider:
   region: us-east-1
   runtime: nodejs18.x
   environment:
-    API_URL: !Sub 'https://${HttpApi}.execute-api.${AWS::Region}.${AWS::URLSuffix}/${sls:stage}'
+    API_URL: ${HttpApi.ApiEndpoint}
 
 functions:
   api:

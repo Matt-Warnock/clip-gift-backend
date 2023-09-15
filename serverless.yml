@@ -7,6 +7,8 @@ provider:
   name: aws
   region: us-east-1
   runtime: nodejs18.x
+  environment:
+    API_URL: !GetAtt HttpApi.ApiEndpoint
 
 functions:
   api:
@@ -19,14 +21,8 @@ functions:
 plugins:
   - serverless-offline
   - serverless-plugin-scripts
-  - serverless-stack-output
 
 custom:
-  output:
-    handler: scripts/output.handler
-    file: ./build/stack-env.json
-
   scripts:
     hooks:
-      'deploy:finalize': newman run fixtures/clipgift-endpoint-tests.postman_collection.json -e ./build/stack-env.json
-      'Stack Outputs:': cat ./build/stack-env.json
+      'deploy:finalize': newman run fixtures/clipgift-endpoint-tests.postman_collection.json --global-var "endpoint=${self:provider.environment.API_URL}"

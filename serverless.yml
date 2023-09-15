@@ -21,8 +21,9 @@ functions:
 plugins:
   - serverless-offline
   - serverless-plugin-scripts
+  - serverless-cf-vars
 
 custom:
   scripts:
     hooks:
-      'deploy:finalize': newman run fixtures/clipgift-endpoint-tests.postman_collection.json --global-var "endpoint=${self:provider.environment.API_URL}"
+      'deploy:finalize': newman run fixtures/clipgift-endpoint-tests.postman_collection.json --global-var "endpoint=#{self:provider.environment.API_URL}"

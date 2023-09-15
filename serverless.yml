@@ -8,7 +8,7 @@ provider:
   region: us-east-1
   runtime: nodejs18.x
   environment:
-    API_URL: !GetAtt HttpApi.ApiEndpoint
+    API_URL: !GetAtt #{HttpApi.ApiEndpoint}
 
 functions:
   api:
@@ -26,4 +26,4 @@ plugins:
 custom:
   scripts:
     hooks:
-      'deploy:finalize': newman run fixtures/clipgift-endpoint-tests.postman_collection.json --global-var "endpoint=#{self:provider.environment.API_URL}"
+      'deploy:finalize': newman run fixtures/clipgift-endpoint-tests.postman_collection.json --global-var "endpoint=${self:provider.environment.API_URL}"

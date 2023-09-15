@@ -19,8 +19,10 @@ functions:
 plugins:
   - serverless-offline
   - serverless-plugin-scripts
+output:
+  stack-url: cf:${self:service}-${sls:stage}.HttpApiUrl
 
 custom:
   scripts:
     hooks:
-      'aws:info:displayStackOutputs': newman run fixtures/clipgift-endpoint-tests.postman_collection.json --env-var "endpoint=${cf:${self:service}-${sls:stage}.HttpApiUrl}"
+      'aws:info:displayStackOutputs': newman run fixtures/clipgift-endpoint-tests.postman_collection.json --env-var "endpoint=${output:stack-url}"

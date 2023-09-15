@@ -8,7 +8,7 @@ provider:
   region: us-east-1
   runtime: nodejs18.x
   environment:
-    API_URL: !GetAtt #{HttpApi.ApiEndpoint}
+    API_URL: !Sub 'https://${HttpApi}.execute-api.${AWS::Region}.${AWS::URLSuffix}/${sls:stage}'
 
 functions:
   api:
@@ -21,7 +21,6 @@ functions:
 plugins:
   - serverless-offline
   - serverless-plugin-scripts
-  - serverless-cf-vars
 
 custom:
   scripts:

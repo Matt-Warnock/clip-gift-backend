@@ -7,8 +7,6 @@ provider:
   name: aws
   region: us-east-1
   runtime: nodejs18.x
-  environment:
-    API_URL: !GetAtt HttpApi.ApiEndpoint
 
 functions:
   api:
@@ -21,9 +19,9 @@ functions:
 plugins:
   - serverless-offline
   - serverless-plugin-scripts
+  - serverless-stack-output
 
 custom:
-  scripts:
-    print: echo self:provider.environment.API_URL
-    hooks:
-      'deploy:finalize': print
+  output:
+    handler: scripts/output.handler
+    file: ./build/stack-env.json

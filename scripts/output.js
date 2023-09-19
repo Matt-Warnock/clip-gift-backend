@@ -15,7 +15,7 @@ function handler(data, serverless, options) {
     _postman_exported_using: "Postman/10.18.3-230918-1447",
   };
 
-  console.log(globalExportData);
+  console.log(JSON.stringify(globalExportData));
 }
 
 module.exports = { handler };

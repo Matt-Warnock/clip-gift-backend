@@ -1,27 +1,21 @@
-const { spawn } = require("child_process");
+function handler(data, serverless, options) {
+  const globalExportData = {
+    id: "782f3f8a-0bc6-43e8-86f0-8fcce89d541a",
+    values: [
+      {
+        key: "endpoint",
+        value: data.HttpApiUrl,
+        type: "default",
+        enabled: true,
+      },
+    ],
+    name: "Globals",
+    _postman_variable_scope: "globals",
+    _postman_exported_at: "2023-09-19T17:31:19.724Z",
+    _postman_exported_using: "Postman/10.18.3-230918-1447",
+  };
 
-function handler(cfdata, serverless, options) {
-  const globalVar = `endpoint=${cfdata.HttpApiUrl}`
-
-  const newman = spawn("newman run fixtures/clipgift-endpoint-tests.postman_collection.json", [`--global-var ${globalVar}`]);
-
-  newman.stdout.on("data", (data) => {
-    console.log(`stdout: ${data}`);
-  });
-
-  newman.stderr.on("data", (data) => {
-    console.log(`stderr: ${data}`);
-  });
-
-  newman.on("error", (error) => {
-    console.log(`error: ${error.message}`);
-  });
-
-  newman.on("close", (code) => {
-    console.log(`child process exited with code ${code}`);
-  });
-
-  console.log("endpoint", cfdata.HttpApiUrl);
+  console.log(globalExportData);
 }
 
 module.exports = { handler };

@@ -5,14 +5,15 @@ frameworkVersion: '3'
 
 provider:
   name: aws
+  region: us-east-1
   runtime: nodejs18.x
 
 functions:
   api:
-    handler: index.handler
+    handler: src/utility/handlers/clip.handler
     events:
       - httpApi:
-          path: /
+          path: /clip
           method: get
 
 plugins:

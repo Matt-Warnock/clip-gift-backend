@@ -18,14 +18,3 @@ functions:
 
 plugins:
   - serverless-offline
-  - serverless-plugin-scripts
-  - serverless-stack-output
-
-custom:
-  output:
-    handler: scripts/output.handler
-    file: ./build/stack-env.json
-
-  scripts:
-    hooks:
-      'deploy:finalize': newman run fixtures/clipgift-endpoint-tests.postman_collection.json -e ./build/stack-env.json

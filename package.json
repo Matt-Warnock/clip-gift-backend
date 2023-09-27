@@ -10,11 +10,7 @@
   "license": "ISC",
   "devDependencies": {
     "jest": "^29.7.0",
-    "newman": "^6.0.0",
-    "serverless-cf-vars": "^0.3.5",
-    "serverless-offline": "^12.0.4",
-    "serverless-plugin-scripts": "^1.0.2",
-    "serverless-stack-output": "^0.2.3"
+    "serverless-offline": "^12.0.4"
   },
   "dependencies": {
     "@types/jest": "^29.5.4"

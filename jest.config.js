@@ -1,3 +1,11 @@
+const axios = require('axios');
+const nock = require('nock');
+
+require('dotenv').config();
+
+axios.defaults.adapter = 'http'
+nock.disableNetConnect();
+
 /**
  * For a detailed explanation regarding each configuration property, visit:
  * https://jestjs.io/docs/configuration

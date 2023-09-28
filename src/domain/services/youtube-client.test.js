@@ -1,10 +1,5 @@
 const YoutubeClient = require('./youtube-client');
-const axios = require('axios');
 const nock = require('nock');
-
-require('dotenv').config();
-
-axios.defaults.adapter = 'http'
 
 describe('youtube client', () => {
     it('calls to the youtube endpoint', async () => {

@@ -1,15 +1,27 @@
-const axios = require('axios');
-
-require('dotenv').config();
+const axios = require("axios");
+require("dotenv").config();
 
 class YoutubeClient {
-    async request () {
-        const youtube_endpoint = process.env.YOUTUBE_END_POINT;
-        const APIKey = process.env.YOUTUBE_API_KEY;
-        const kittenSearchQueries = 'part=snippet&maxResults=1&q=kittens&type=video&videoDuration=short'
+  #searchEndpoint;
+  #aPIKey;
 
-        const response = await axios.get(`${youtube_endpoint}/search?${kittenSearchQueries}&key=${APIKey}`)
+  constructor() {
+    this.#searchEndpoint = `${process.env.YOUTUBE_END_POINT}/search`;
+    this.#aPIKey = process.env.YOUTUBE_API_KEY; 
+  }
+
+  async searchVideo(searchString) {
+    const queries = {
+      part: 'snippet',
+      maxResults: 1,
+      q: searchString,
+      type: 'video',
+      videoDuration: 'short',
+      key: this.#aPIKey,
     };
-};
+
+    const response = await axios.get(this.#searchEndpoint, { params: queries });
+  }
+}
 
 module.exports = YoutubeClient;

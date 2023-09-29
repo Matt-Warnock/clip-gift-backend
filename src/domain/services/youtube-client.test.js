@@ -1,28 +1,29 @@
-const YoutubeClient = require('./youtube-client');
-const nock = require('nock');
+const YoutubeClient = require("./youtube-client");
+const nock = require("nock");
 
-describe('youtube client', () => {
-    it('calls to the youtube endpoint with kitten search queries', async () => {
-        const endpoint = process.env.YOUTUBE_END_POINT
-        const APIKey = process.env.YOUTUBE_API_KEY
-        const kittenSearchQueries = {
-            part: 'snippet',
-            maxResults: 1,
-            q: 'kittens',
-            type: 'video',
-            videoDuration: 'short',
-            key: APIKey
-        }
+describe("youtube client", () => {
+  const endpoint = process.env.YOUTUBE_END_POINT;
+  const aPIKey = process.env.YOUTUBE_API_KEY;
 
-        const scope = nock(endpoint)
-        .get('/search')
-        .query(kittenSearchQueries)
-        .reply(200);
+  it("calls youtube endpoint with passed search string & queries", async () => {
+    const searchString = 'kittens';
+    const queries = {
+      part: 'snippet',
+      maxResults: 1,
+      q: searchString,
+      type: 'video',
+      videoDuration: 'short',
+      key: aPIKey,
+    };
 
+    const scope = nock(endpoint)
+      .get('/search')
+      .query(queries)
+      .reply(200);
 
-        const client = new YoutubeClient;
-        await client.request();
+    const client = new YoutubeClient();
+    await client.searchVideo(searchString);
 
-        expect(scope.isDone()).toBe(true);
-    })
-})
+    expect(scope.isDone()).toBe(true);
+  });
+});

@@ -1,7 +1,8 @@
 const nock = require("nock");
 const searchResponse = require("../../../fixtures/youtube-kitten-search.json");
 const YoutubeClient = require("./youtube-client");
-const YouTubeServiceResponse = require("./youtube-service-response");
+const YouTubeServiceResponse = require("./youtube-search-response");
+const BadServiceResponse = require("./bad-service-response");
 
 describe("youtube client", () => {
   const client = new YoutubeClient(),
@@ -22,10 +23,18 @@ describe("youtube client", () => {
     const response = await client.searchVideo(searchString);
 
     expect(response).toBeInstanceOf(YouTubeServiceResponse);
-    expect(response.getSearchResult()).toEqual(searchResult);
+    expect(response.getResponseData()).toEqual(searchResult);
   });
 
-  const setupHttpMock = () => {
+  it("Returns a bad response object when response is not 200", async () => {
+    setupHttpMock(400);
+
+    const response = await client.searchVideo(searchString);
+
+    expect(response).toBeInstanceOf(BadServiceResponse);
+  });
+
+  const setupHttpMock = (statusCode = 200) => {
     const queries = {
       part: "snippet",
       maxResults: 1,
@@ -38,6 +47,6 @@ describe("youtube client", () => {
     return nock(process.env.YOUTUBE_END_POINT)
       .get("/search")
       .query(queries)
-      .reply(200, searchResponse);
+      .reply(statusCode, searchResponse);
   };
 });

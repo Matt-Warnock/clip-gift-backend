@@ -1,5 +1,6 @@
 const axios = require("axios");
-const YouTubeServiceResponse = require("./youtube-service-response");
+const YouTubeSearchResponse = require("./youtube-search-response");
+const BadServiceResponse = require("./bad-service-response");
 require("dotenv").config();
 
 class YoutubeClient {
@@ -21,11 +22,12 @@ class YoutubeClient {
       key: this.#aPIKey,
     };
 
-
-    const response = await axios.get(this.#searchEndpoint, { params: queries });
-    const searchResult = response.data.items[0];
-
-    return new YouTubeServiceResponse(searchResult);
+    try {
+      const response = await axios.get(this.#searchEndpoint, { params: queries });
+      return new YouTubeSearchResponse(response);
+    } catch (error) {
+      return new BadServiceResponse(error);
+    }
   }
 }
 

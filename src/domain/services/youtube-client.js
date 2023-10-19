@@ -1,6 +1,6 @@
 const axios = require("axios");
 const YouTubeSearchResponse = require("./youtube-search-response");
-const BadServiceResponse = require("./bad-service-response");
+const BadClientResponse = require("./bad-client-response");
 require("dotenv").config();
 
 class YoutubeClient {
@@ -26,7 +26,7 @@ class YoutubeClient {
       const response = await axios.get(this.#searchEndpoint, { params: queries });
       return new YouTubeSearchResponse(response);
     } catch (error) {
-      return new BadServiceResponse(error);
+      return new BadClientResponse(error);
     }
   }
 }

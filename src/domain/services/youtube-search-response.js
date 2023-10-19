@@ -1,16 +1,18 @@
-const ServiceResponse = require('./service-response');
+const ClientResponse = require('./client-response');
 
-class YouTubeSearchResponse extends ServiceResponse {
+class YouTubeSearchResponse extends ClientResponse {
+  #response;
+  #videoURL;
+
   constructor(response) {
-    super(response);
+    super()
+    this.#response = response;
+    this.#videoURL = 'https://www.youtube.com/watch?v=';
   }
 
-  responseIsGood() {
-    return true;
-  }
-
-  getResponseData() {
-    return this.response.data.items[0];
+  messageString() {
+    const videoId = this.#response.data.items[0].id.videoId;
+    return this.#videoURL + videoId;
   }
 }
 

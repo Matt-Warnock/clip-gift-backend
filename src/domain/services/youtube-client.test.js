@@ -7,6 +7,14 @@ const BadClientResponse = require("./bad-client-response");
 describe("youtube client", () => {
   const client = new YoutubeClient(),
     searchString = "kittens";
+    queries = {
+    part: "snippet",
+    maxResults: 1,
+    q: searchString,
+    type: "video",
+    videoDuration: "short",
+    key: process.env.YOUTUBE_API_KEY,
+  };
 
   it("calls youtube endpoint with passed search string & queries", async () => {
     const scope = setupHttpMock();
@@ -17,7 +25,7 @@ describe("youtube client", () => {
   });
 
   it("Returns a response object with search result URL", async () => {
-    const searchResultURL = 'https://www.youtube.com/watch?v=l3iIccjlgu4';
+    const searchResultURL = "https://www.youtube.com/watch?v=l3iIccjlgu4";
     setupHttpMock();
 
     const response = await client.searchVideo(searchString);
@@ -26,25 +34,23 @@ describe("youtube client", () => {
     expect(response.messageString()).toEqual(searchResultURL);
   });
 
-  it("Returns a bad response object when axios response is not 200", async () => {
-    setupHttpMock(400);
+  it("Returns a bad response object when axios replies with error", async () => {
+    const errorObject = {
+      response: { data: { error: { message: "Invalid Key" } } }
+    }
+
+    nock(process.env.YOUTUBE_END_POINT)
+      .get("/search")
+      .query(queries)
+      .replyWithError(errorObject);
 
     const response = await client.searchVideo(searchString);
 
     expect(response).toBeInstanceOf(BadClientResponse);
-    expect(response.messageString()).toMatch(/error/i);
+    expect(response.messageString()).toMatch(/error: invalid key/i);
   });
 
   const setupHttpMock = (statusCode = 200) => {
-    const queries = {
-      part: "snippet",
-      maxResults: 1,
-      q: searchString,
-      type: "video",
-      videoDuration: "short",
-      key: process.env.YOUTUBE_API_KEY,
-    };
-
     return nock(process.env.YOUTUBE_END_POINT)
       .get("/search")
       .query(queries)

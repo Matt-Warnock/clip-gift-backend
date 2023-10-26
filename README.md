@@ -1,14 +1,28 @@
 <!--
-title: 'AWS Simple HTTP Endpoint example in NodeJS'
-description: 'This template demonstrates how to make a simple HTTP API with Node.js running on AWS Lambda and API Gateway using the Serverless Framework.'
-layout: Doc
-framework: v3
-platform: AWS
-language: nodeJS
-authorLink: 'https://github.com/serverless'
-authorName: 'Serverless, inc.'
-authorAvatar: 'https://avatars1.githubusercontent.com/u/13742415?s=200&v=4'
+title: 'Youtube clip gifting service'
+description: 'This back-end service is design to retrieve short YouTube clips based on the users emotional need state (comfort, calm, inspire, excite).'
 -->
+
+[![Codeac](https://static.codeac.io/badges/2-691146324.svg "Codeac")](https://app.codeac.io/github/Matt-Warnock/clip-gift-backend)
+
+# Clipgift
+### a youtube clip sharing platform service
+
+## About
+
+This back-end service is design to retrieve short YouTube clips based on the users emotional need state (comfort, calm, inspire, excite).
+In future iterations it will retrieve a clip tailored to the preferences stated in a user database. For now it is hard wired on global search setting in a simple 'emotion to search' translator object.
+
+## YouTube Search Service
+
+You will need to setup a google account, add the YouTube service to your account, then set your YouTube API key and YouTube endpoint as env variables on the CI/CD environment or as a `.env` file with the following:
+
+`
+YOUTUBE_END_POINT="https://www.googleapis.com/youtube/v3"
+YOUTUBE_API_KEY="<your_api_key>"
+`
+
+
 
 # Serverless Framework Node HTTP API on AWS
 

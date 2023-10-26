@@ -1,0 +1,46 @@
+{
+  "kind": "youtube#searchListResponse",
+  "etag": "4i5CiEaApzBadJf07wXhipXemuI",
+  "nextPageToken": "CAEQAA",
+  "regionCode": "GB",
+  "pageInfo": {
+    "totalResults": 1000000,
+    "resultsPerPage": 1
+  },
+  "items": [
+    {
+      "kind": "youtube#searchResult",
+      "etag": "fDL3KqI6I-Y3g3FcvqPokaiOrxA",
+      "id": {
+        "kind": "youtube#video",
+        "videoId": "l3iIccjlgu4"
+      },
+      "snippet": {
+        "publishedAt": "2023-10-01T11:00:39Z",
+        "channelId": "UCtZ8w9jJUn5hoGhT0QxdzpQ",
+        "title": "Twin kittens stay together, never leaving each other for a moment",
+        "description": "Click here to register for Tiny Kitten membership! →https://youtube.com/@cocomimikiki/join ...",
+        "thumbnails": {
+          "default": {
+            "url": "https://i.ytimg.com/vi/l3iIccjlgu4/default.jpg",
+            "width": 120,
+            "height": 90
+          },
+          "medium": {
+            "url": "https://i.ytimg.com/vi/l3iIccjlgu4/mqdefault.jpg",
+            "width": 320,
+            "height": 180
+          },
+          "high": {
+            "url": "https://i.ytimg.com/vi/l3iIccjlgu4/hqdefault.jpg",
+            "width": 480,
+            "height": 360
+          }
+        },
+        "channelTitle": "Tiny Kitten",
+        "liveBroadcastContent": "none",
+        "publishTime": "2023-10-01T11:00:39Z"
+      }
+    }
+  ]
+}

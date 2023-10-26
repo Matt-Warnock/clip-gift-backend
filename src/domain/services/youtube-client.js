@@ -1,7 +1,7 @@
-const axios = require("axios");
-const YouTubeSearchResponse = require("./youtube-search-response");
-const BadClientResponse = require("./bad-client-response");
-require("dotenv").config();
+const axios = require('axios');
+const YouTubeSearchResponse = require('./youtube-search-response');
+const BadClientResponse = require('./bad-client-response');
+require('dotenv').config();
 
 class YoutubeClient {
   #searchEndpoint;
@@ -14,11 +14,11 @@ class YoutubeClient {
 
   async searchVideo(searchString) {
     const queries = {
-      part: "snippet",
+      part: 'snippet',
       maxResults: 1,
       q: searchString,
-      type: "video",
-      videoDuration: "short",
+      type: 'video',
+      videoDuration: 'short',
       key: this.#aPIKey,
     };
 

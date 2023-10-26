@@ -16,7 +16,7 @@ class BadClientResponse extends ClientResponse {
       console.log(this.#error.response.data);
 
     } else if (this.#error.request) {
-      message = "Bad request";
+      message = 'Bad request';
       console.log(this.#error.request);
 
     } else {

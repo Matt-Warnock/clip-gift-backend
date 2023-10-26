@@ -1,14 +1,14 @@
-const feelMessenger = require("./feel-messenger");
+const feelMessenger = require('./feel-messenger');
 
 describe(feelMessenger, () => {
-  it("returns string that includes feel parameter", () => {
-    const parameters = { feel: "happy" };
+  it('returns string that includes feel parameter', () => {
+    const parameters = { feel: 'happy' };
     const regex = new RegExp(parameters.feel);
 
     expect(feelMessenger(parameters)).toMatch(regex);
   });
 
-  it("If no feel pram given, returns default message", () => {
+  it('If no feel pram given, returns default message', () => {
     const parameters = {};
     const defaultMessage = "I don't know what type of clip you want!";
 

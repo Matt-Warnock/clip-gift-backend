@@ -1,7 +1,8 @@
+env:
+  node: true
 extends:
   - eslint:recommended
   - plugin:jest/recommended
-parser: "@babel/eslint-parser"
 env:
   jest/globals: true
 plugins:

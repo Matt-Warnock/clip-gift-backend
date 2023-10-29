@@ -1,0 +1,16 @@
+extends:
+  - eslint:recommended
+  - plugin:jest/recommended
+parser: "@babel/eslint-parser"
+env:
+  jest/globals: true
+plugins:
+  - jest
+rules:
+  complexity:
+    - error
+    - 10
+  no-await-in-loop: warn
+  no-eval: error
+  no-implied-eval: error
+  prefer-promise-reject-errors: warn

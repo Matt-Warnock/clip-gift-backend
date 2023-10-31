@@ -1,15 +1,15 @@
-const axios = require('axios');
-const YouTubeSearchResponse = require('./youtube-search-response');
-const BadClientResponse = require('./bad-client-response');
-require('dotenv').config();
+const axios = require('axios')
+const YouTubeSearchResponse = require('./youtube-search-response')
+const BadClientResponse = require('./bad-client-response')
+require('dotenv').config()
 
 class YoutubeClient {
-  #searchEndpoint;
-  #aPIKey;
+  #searchEndpoint
+  #aPIKey
 
   constructor() {
-    this.#searchEndpoint = `${process.env.YOUTUBE_END_POINT}/search`;
-    this.#aPIKey = process.env.YOUTUBE_API_KEY;
+    this.#searchEndpoint = `${process.env.YOUTUBE_END_POINT}/search`
+    this.#aPIKey = process.env.YOUTUBE_API_KEY
   }
 
   async searchVideo(searchString) {
@@ -20,15 +20,15 @@ class YoutubeClient {
       type: 'video',
       videoDuration: 'short',
       key: this.#aPIKey,
-    };
+    }
 
     try {
-      const response = await axios.get(this.#searchEndpoint, { params: queries });
-      return new YouTubeSearchResponse(response);
+      const response = await axios.get(this.#searchEndpoint, { params: queries })
+      return new YouTubeSearchResponse(response)
     } catch (error) {
-      return new BadClientResponse(error);
+      return new BadClientResponse(error)
     }
   }
 }
 
-module.exports = YoutubeClient;
+module.exports = YoutubeClient

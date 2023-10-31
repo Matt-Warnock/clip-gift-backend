@@ -1,7 +1,7 @@
-const feelMessenger = require("../../domain/feel-messenger");
+const feelMessenger = require('../../domain/feel-messenger')
 
 module.exports.handler = async (event) => {
-  const message = feelMessenger(event.queryStringParameters);
+  const message = feelMessenger(event.queryStringParameters)
 
   return {
     statusCode: 200,
@@ -13,5 +13,5 @@ module.exports.handler = async (event) => {
       null,
       2
     ),
-  };
-};
+  }
+}

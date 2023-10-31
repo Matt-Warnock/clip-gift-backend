@@ -1,12 +1,14 @@
-const nock = require('nock')
-const searchResponse = require('../../../fixtures/youtube-kitten-search.json')
+const httpMocks = require('../helpers/http-mocks')
 const YoutubeClient = require('./youtube-client')
 const YouTubeSearchResponse = require('./youtube-search-response')
 const BadClientResponse = require('./bad-client-response')
 
 describe('youtube client', () => {
+  const client = new YoutubeClient()
+  const searchString = 'kittens'
+
   it('calls youtube endpoint with passed search string & queries', async () => {
-    const scope = setupGoodHttpMock()
+    const scope = httpMocks.setupGoodHttpMock()
 
     await client.searchVideo(searchString)
 
@@ -15,7 +17,7 @@ describe('youtube client', () => {
 
   it('Returns a response object with search result URL', async () => {
     const searchResultURL = 'https://www.youtube.com/watch?v=l3iIccjlgu4'
-    setupGoodHttpMock()
+    httpMocks.setupGoodHttpMock()
 
     const response = await client.searchVideo(searchString)
 
@@ -28,7 +30,7 @@ describe('youtube client', () => {
       const errorObject = {
         response: { data: { error: { message: 'Invalid Key' } } }
       }
-      setupErrorHttpMock(errorObject)
+      httpMocks.setupErrorHttpMock(errorObject)
 
       const response = await client.searchVideo(searchString)
 
@@ -37,7 +39,7 @@ describe('youtube client', () => {
     })
 
     it('when axios request is bad', async () => {
-      setupErrorHttpMock({ request: {} })
+      httpMocks.setupErrorHttpMock({ request: {} })
 
       const response = await client.searchVideo(searchString)
 
@@ -45,29 +47,4 @@ describe('youtube client', () => {
       expect(response.messageString()).toMatch(/error: bad request/i)
     })
   })
-
-  const setupGoodHttpMock = (statusCode = 200) => {
-    return nock(process.env.YOUTUBE_END_POINT)
-      .get('/search')
-      .query(queries)
-      .reply(statusCode, searchResponse)
-  }
-
-  const setupErrorHttpMock = (errorObject) => {
-    return nock(process.env.YOUTUBE_END_POINT)
-    .get('/search')
-    .query(queries)
-    .replyWithError(errorObject)
-  }
-
-  const client = new YoutubeClient(),
-    searchString = 'kittens',
-    queries = {
-    part: 'snippet',
-    maxResults: 1,
-    q: searchString,
-    type: 'video',
-    videoDuration: 'short',
-    key: process.env.YOUTUBE_API_KEY,
-  }
 })

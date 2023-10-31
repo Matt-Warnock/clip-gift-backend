@@ -1,8 +1,8 @@
-const axios = require('axios');
-const nock = require('nock');
+const axios = require('axios')
+const nock = require('nock')
 
 axios.defaults.adapter = 'http'
-nock.disableNetConnect();
+nock.disableNetConnect()
 
 /**
  * For a detailed explanation regarding each configuration property, visit:
@@ -35,7 +35,7 @@ const config = {
   // collectCoverageFrom: undefined,
 
   // The directory where Jest should output its coverage files
-  coverageDirectory: "coverage",
+  coverageDirectory: 'coverage',
 
   // An array of regexp pattern strings used to skip coverage collection
   // coveragePathIgnorePatterns: [
@@ -204,6 +204,6 @@ const config = {
 
   // Whether to use watchman for file crawling
   // watchman: true,
-};
+}
 
-module.exports = config;
+module.exports = config

@@ -2,4 +2,4 @@ class ClientResponse {
   messageString() {}
 }
 
-module.exports = ClientResponse;
+module.exports = ClientResponse

@@ -14,6 +14,6 @@ describe('Retriever', () => {
       )
     const youtubeClipURL = retriever.clipFor('soothe')
 
-    expect(youtubeClipURL).toMatch('https://www.youtube.com/watch?v=l3iIccjlgu4')
+    return expect(youtubeClipURL).resolves.toMatch('https://www.youtube.com/watch?v=l3iIccjlgu4')
   })
 })

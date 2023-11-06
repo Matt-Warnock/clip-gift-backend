@@ -26,6 +26,10 @@ describe('youtube client', () => {
   })
 
   describe('Returns a bad response object' , () => {
+    beforeEach(() => {
+      jest.spyOn(console, 'log').mockImplementation(() => {})
+    })
+    
     it('when axios replies with error', async () => {
       const errorObject = {
         response: { data: { error: { message: 'Invalid Key' } } }

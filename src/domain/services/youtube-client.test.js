@@ -4,7 +4,10 @@ const YouTubeSearchResponse = require('./youtube-search-response')
 const BadClientResponse = require('./bad-client-response')
 
 describe('youtube client', () => {
-  const client = new YoutubeClient()
+  jest.mock('../../utility/error-handler')
+  const ErrorHandler = require('../../utility/error-handler')
+
+  const client = new YoutubeClient(new ErrorHandler())
   const searchString = 'kittens'
 
   it('calls youtube endpoint with passed search string & queries', async () => {
@@ -25,30 +28,54 @@ describe('youtube client', () => {
     expect(response.messageString()).toEqual(searchResultURL)
   })
 
-  describe('Returns a bad response object' , () => {
+  describe('When axios response is an error', () => {
+    const errorObject = {
+      response: { data: { error: { message: 'Invalid Key' } } }
+    }
+
     beforeEach(() => {
-      jest.spyOn(console, 'log').mockImplementation(() => {})
-    })
-    
-    it('when axios replies with error', async () => {
-      const errorObject = {
-        response: { data: { error: { message: 'Invalid Key' } } }
-      }
       httpMocks.setupErrorHttpMock(errorObject)
-
-      const response = await client.searchVideo(searchString)
-
-      expect(response).toBeInstanceOf(BadClientResponse)
-      expect(response.messageString()).toMatch(/error: invalid key/i)
     })
 
-    it('when axios request is bad', async () => {
-      httpMocks.setupErrorHttpMock({ request: {} })
-
+    it('Returns a bad response object with empty string', async () => {
       const response = await client.searchVideo(searchString)
 
       expect(response).toBeInstanceOf(BadClientResponse)
-      expect(response.messageString()).toMatch(/error: bad request/i)
+      expect(response.messageString()).toBe('')
+    })
+
+    it('Passes client error to error handler', async () => {
+      const errorPacket = { clientError: errorObject.response.data }
+      const spy = jest.spyOn(ErrorHandler.prototype, 'log')
+
+      await client.searchVideo(searchString)
+
+      expect(spy).toHaveBeenCalledWith(errorPacket)
+    })
+  })
+
+  describe('When axios request is bad' , () => {
+    const path = 'https://www.youtube_endpoint/search?part=snippet&maxResults=1&q=kittens&type=video&videoDuration=short&key=youtube_key'
+    const errorObject = { request: { path: path } }
+  
+    beforeEach(() => {
+      httpMocks.setupErrorHttpMock(errorObject)
+    })
+
+    it('Returns a bad response object with empty string', async () => {
+      const response = await client.searchVideo(searchString)
+
+      expect(response).toBeInstanceOf(BadClientResponse)
+      expect(response.messageString()).toBe('')
+    })
+
+    it('Passes client error to error handler', async () => {
+      const errorPacket = { clientError: errorObject.request }
+      const spy = jest.spyOn(ErrorHandler.prototype, 'log')
+
+      await client.searchVideo(searchString)
+
+      expect(spy).toHaveBeenCalledWith(errorPacket)
     })
   })
 })

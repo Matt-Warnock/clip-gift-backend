@@ -1,5 +1,4 @@
 const ErrorHandler = require('./error-handler')
-const BadClientResponse = require('../domain/services/bad-client-response')
 
 describe('ErrorHandler', () => {
   const error = { errorMessage: 'irrelevant' }
@@ -30,10 +29,10 @@ describe('ErrorHandler', () => {
     expect(console.log).toHaveBeenNthCalledWith(2, errorTwo)
   })
 
-  it('Assigns 500 status code when error is Bad Client Response', () => {
-    const badClientResponse = new BadClientResponse(error)
+  it('Assigns 500 status code when sent a client error', () => {
+    const errorPacket = { clientError: {} }
 
-    errorHandler.log(badClientResponse)
+    errorHandler.log(errorPacket)
 
     expect(errorHandler.getStatusCode()).toBe(500)
   })

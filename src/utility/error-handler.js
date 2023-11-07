@@ -1,5 +1,3 @@
-const BadClientResponse = require('../domain/services/bad-client-response')
-
 class ErrorHandler {
   #errors
   #statusCode
@@ -9,7 +7,7 @@ class ErrorHandler {
   }
 
   log(error) {
-    if (error instanceof BadClientResponse) {
+    if (error.clientError) {
       this.#statusCode = 500
     }
 

@@ -1,4 +1,4 @@
-const ClientResponse = require('./client-response')
+const ClientResponse = require('../interfaces/client-response')
 
 class YouTubeSearchResponse extends ClientResponse {
   #response

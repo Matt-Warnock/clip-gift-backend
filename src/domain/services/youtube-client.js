@@ -4,12 +4,14 @@ const BadClientResponse = require('./bad-client-response')
 require('dotenv').config()
 
 class YoutubeClient {
-  #searchEndpoint
   #aPIKey
+  #errorHandler
+  #searchEndpoint
 
-  constructor() {
-    this.#searchEndpoint = `${process.env.YOUTUBE_END_POINT}/search`
+  constructor(errorHandler) {
     this.#aPIKey = process.env.YOUTUBE_API_KEY
+    this.#errorHandler = errorHandler
+    this.#searchEndpoint = `${process.env.YOUTUBE_END_POINT}/search`
   }
 
   async searchVideo(searchString) {
@@ -26,8 +28,23 @@ class YoutubeClient {
       const response = await axios.get(this.#searchEndpoint, { params: queries })
       return new YouTubeSearchResponse(response)
     } catch (error) {
-      return new BadClientResponse(error)
+      this.#errorHandler.log(this.#parseError(error))
+      return new BadClientResponse()
     }
+  }
+
+  #parseError(error) {
+    let errorPacket
+
+    if (error.response) {
+      errorPacket = error.response.data
+    } else if (error.request) {
+      errorPacket = { path: error.request._currentUrl }
+    } else {
+      errorPacket = error.message
+    }
+
+    return { clientError: errorPacket }
   }
 }
 
